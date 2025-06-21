@@ -1,0 +1,13 @@
+../Core/Src/main.c:91:6:HAL_ADC_ConvCpltCallback	16	static
+../Core/Src/main.c:99:6:vTask_Move_Soldado	56	static
+../Core/Src/main.c:185:6:vTask_Print_Soldado	16	static
+../Core/Src/main.c:195:6:vTask_Print_ValorADC	32	static
+../Core/Src/main.c:217:5:main	32	static
+../Core/Src/main.c:346:6:SystemClock_Config	88	static
+../Core/Src/main.c:393:13:MX_ADC1_Init	24	static
+../Core/Src/main.c:454:13:MX_SPI1_Init	8	static
+../Core/Src/main.c:490:13:MX_DMA_Init	16	static
+../Core/Src/main.c:508:13:MX_GPIO_Init	48	static
+../Core/Src/main.c:561:6:StartDefaultTask	16	static
+../Core/Src/main.c:582:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/main.c:599:6:Error_Handler	4	static,ignoring_inline_asm

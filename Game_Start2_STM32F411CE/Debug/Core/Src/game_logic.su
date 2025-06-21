@@ -1,0 +1,7 @@
+../Core/Src/game_logic.c:16:16:CheckTileAt	24	static
+../Core/Src/game_logic.c:25:9:CheckWallCollision	24	static
+../Core/Src/game_logic.c:44:9:CheckGoal	24	static
+../Core/Src/game_logic.c:58:9:CheckDanger	24	static
+../Core/Src/game_logic.c:73:6:Game_RestartLevel	24	static
+../Core/Src/game_logic.c:83:6:Game_NextLevel	24	static
+../Core/Src/game_logic.c:93:6:Game_GameOver	24	static

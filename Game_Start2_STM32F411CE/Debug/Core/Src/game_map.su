@@ -1,0 +1,2 @@
+../Core/Src/game_map.c:170:6:DrawGameMap	24	static
+../Core/Src/game_map.c:190:9:GetTileType	16	static
