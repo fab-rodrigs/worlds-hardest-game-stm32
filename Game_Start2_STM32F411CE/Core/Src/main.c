@@ -30,9 +30,11 @@
 #include "defPrincipais.h"
 #include "PRNG_LFSR.h"
 #include "st7735.h"
-// --- NOVAS INCLUSÕES PARA O JOGO ---
+
 #include "game_map.h"   // Para definições do mapa e dimensões do LCD
 #include "game_logic.h" // Para lógica do jogo e colisões
+#include "game_entities.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -68,10 +70,14 @@ const osThreadAttr_t defaultTask_attributes = {
 uint16_t ADC_buffer[2];
 uint16_t valor_ADC[2];
 
-// --- NOVAS VARIÁVEIS GLOBAIS PARA O JOGADOR ---
-int32_t player_x; // Posição X do jogador
-int32_t player_y; // Posição Y do jogador
-const uint8_t PLAYER_SIZE = 8; // O "soldado" tem 8x8 pixels (baseado em sua FigDef)
+
+int32_t player_x;
+int32_t player_y;
+#define NUM_BALLS 3
+GameObject red_balls[NUM_BALLS];
+const uint8_t PLAYER_SIZE = 8;
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -96,7 +102,27 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 }
 
 //---------------------------------------------------------------------------------------------------
-// --- vTask_Move_Soldado (MODIFICADA) ---
+
+void vTask_Move_Balls(void *pvParameters)
+{
+    while (1)
+    {
+        for (int i = 0; i < NUM_BALLS; i++)
+        {
+            UpdateObject(&red_balls[i]);
+            DrawObject(&red_balls[i]);
+
+            if (CheckCollision(player_x, player_y, PLAYER_SIZE, PLAYER_SIZE,
+                               red_balls[i].x, red_balls[i].y, red_balls[i].width, red_balls[i].height))
+            {
+                Game_GameOver();
+            }
+        }
+        vTaskDelay(20);
+    }
+}
+
+
 void vTask_Move_Soldado(void *pvParameters)
 {
 	int32_t current_player_x, current_player_y; // Guarda a posição atual do jogador
@@ -110,17 +136,13 @@ void vTask_Move_Soldado(void *pvParameters)
 		next_player_x = player_x; // Começa a próxima posição como a atual
 		next_player_y = player_y; // Começa a próxima posição como a atual
 
-		// Apaga o soldado na posição anterior.
-        // ATENÇÃO: Apagar com ST7735_BLACK só funciona se o fundo do mapa for preto.
-        // Se o fundo não for preto, você precisa redesenhar os pixels do mapa
-        // que estavam sob o jogador.
+		// Apaga o player na posição anterior (pinta de preto).
 		ST7735_FillRectangle(current_player_x, current_player_y, PLAYER_SIZE, PLAYER_SIZE, ST7735_BLACK);
 
 		// Leitura do Joystick
 		uint32_t dif_eixoX = valor_ADC[1];
 		uint32_t dif_eixoY = valor_ADC[0];
 
-		// Lógica de Movimento do Jogador (calcula a *próxima* posição pretendida)
 		// Ajuste os thresholds (1800, 3800) conforme a sensibilidade do seu joystick
 		if(dif_eixoX < 1800)
 		{
@@ -148,13 +170,10 @@ void vTask_Move_Soldado(void *pvParameters)
 		if (next_player_y > (ST7735_HEIGHT - PLAYER_SIZE)) next_player_y = (ST7735_HEIGHT - PLAYER_SIZE);
 
         // --- LÓGICA DE JOGO: COLISÕES E ESTADO ---
-        // 1. Detecção de Colisão com Paredes
-		// Se a próxima posição colidir com uma parede, o jogador NÃO SE MOVE para lá.
-		// Ele permanece na posição atual.
+		// Paredes bloqueiam o movimento.
 		if (CheckWallCollision(next_player_x, next_player_y, PLAYER_SIZE, PLAYER_SIZE)) {
 			player_x = current_player_x; // Volta para a posição anterior
 			player_y = current_player_y; // Volta para a posição anterior
-			// Paredes não matam, apenas bloqueiam o movimento.
 		} else {
 			// Se não colidir com parede, a nova posição é válida
 			player_x = next_player_x;
@@ -162,16 +181,18 @@ void vTask_Move_Soldado(void *pvParameters)
 		}
 
         // 2. Colisão com Áreas de Perigo (Tiles vermelhos)
-		// Esta colisão AGORA causa o Game Over.
+		UpdateObject(red_balls);
+		DrawObject(red_balls);
+		// A colisão com esses objetos causa o Game Over.
         if (CheckDanger(player_x, player_y, PLAYER_SIZE, PLAYER_SIZE)) {
             Game_GameOver();
         }
 
         // 3. Chegou ao Objetivo (Tiles azuis)
+        // A colisão com esses objetos passa o jogador para outro nível
         if (CheckGoal(player_x, player_y, PLAYER_SIZE, PLAYER_SIZE)) {
             Game_NextLevel();
         }
-        // --- FIM DA LÓGICA DE JOGO ---
 
 		// Redesenha o soldado na nova posição
 		ST7735_draw_figure(player_x, player_y, soldado, ST7735_GREEN);
@@ -180,10 +201,7 @@ void vTask_Move_Soldado(void *pvParameters)
 	}
 }
 //---------------------------------------------------------------------------------------------------
-// --- vTask_Print_Soldado (MODIFICADA - REMOVIDA LÓGICA DE DESENHO) ---
-// Esta task não será mais usada para desenhar soldados estáticos.
-// Você pode mantê-la com um delay alto ou removê-la da criação de tasks se não precisar.
-void vTask_Print_Soldado(void *pvParameters)
+/*void vTask_Print_Soldado(void *pvParameters)
 {
 	while(1)
 	{
@@ -191,14 +209,13 @@ void vTask_Print_Soldado(void *pvParameters)
 		// ST7735_draw_figure(9, 70, soldado, ST7735_GREEN); // Removido
 		vTaskDelay(500); // Apenas um atraso para evitar CPU ociosa se a task ainda existir
 	}
-}
+}*/
 //---------------------------------------------------------------------------------------------------
 void vTask_Print_ValorADC(void *pvParameters)
 {
 	while(1)
 	{
         // Esta task pode ser útil para depuração, mas não faz parte do jogo.
-        // Considere removê-la para liberar recursos.
 		ST7735_WriteString(75, 50, "     ", Font_7x10, ST7735_GREEN, ST7735_BLACK);
 		ST7735_write_nr(75, 50, valor_ADC[0], Font_7x10, ST7735_GREEN, ST7735_BLACK);
 
@@ -254,9 +271,9 @@ int main(void)
   ST7735_FillScreen(ST7735_BLACK); // Limpa a tela antes de desenhar o mapa
 
   // Você pode ter uma tela de introdução antes do jogo começar.
-  ST7735_draw_figure(15, 8, fig_campo_minado, ST7735_WHITE); // Sua figura existente
-  ST7735_WriteString(20, 28,"World's Hardest Game", Font_7x10, ST7735_CYAN, ST7735_BLACK);
-  ST7735_WriteString(42, 48,"Pressione Start!", Font_7x10, ST7735_RED, ST7735_BLACK);
+  ST7735_draw_figure(0, 8, fig_campo_minado, ST7735_WHITE); // Sua figura existente
+  //ST7735_WriteString(20, 28,"World's Hardest Game", Font_7x10, ST7735_CYAN, ST7735_BLACK);
+  ST7735_WriteString(32, 48,"Pressione Start!", Font_7x10, ST7735_CYAN, ST7735_BLACK);
 
 
   // --------------------------------------------------------------------------------------
@@ -276,13 +293,19 @@ int main(void)
 
   // Desenha o mapa do jogo pela primeira vez
   DrawGameMap();
+  // Inicializa bolinhas vermelhas
+  InitObject(&red_balls[0], 60, 60,  1,  1, 8, 8, ST7735_RED);
+  InitObject(&red_balls[1], 50, 60, -1,  1, 8, 8, ST7735_RED);
+  InitObject(&red_balls[2], 80, 60,  1, -1, 8, 8, ST7735_RED);
 
-  // Define a posição inicial do jogador (da game_map.h)
+
+  // Define a posição inicial do jogador
   player_x = PLAYER_START_X;
   player_y = PLAYER_START_Y;
 
-  // Desenha o jogador na posição inicial do mapa
   ST7735_draw_figure(player_x, player_y, soldado, ST7735_GREEN);
+
+  DrawObject(red_balls);
 
   /* USER CODE END 2 */
 
@@ -311,11 +334,15 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-  // --- CRIAÇÃO DAS TASKS (MODIFICADA) ---
+
+  // --- CRIAÇÃO DAS TASKS ---
+
   xTaskCreate(vTask_Move_Soldado, "SoldadoAnda", 256, NULL, osPriorityAboveNormal, NULL);
-  // Remova ou comente esta task, pois não será mais usada para desenhar soldados estáticos.
+  xTaskCreate(vTask_Move_Balls, "Bolinhas", 256, NULL, osPriorityNormal, NULL);
+
+
   // xTaskCreate(vTask_Print_Soldado, "soldado", 256, NULL, osPriorityNormal, NULL);
-  // Opcional: Para ver os valores do ADC no LCD (útil para depuração, mas remova no jogo final)
+
   // xTaskCreate(vTask_Print_ValorADC, "ADC_Joystick_Debug", 256, NULL, osPriorityNormal, NULL);
 
   /* USER CODE END RTOS_THREADS */
@@ -329,12 +356,42 @@ int main(void)
 
   /* We should never get here as control is now taken by the scheduler */
 
+  // Dentro de vTask_Move_Soldado ou uma nova task de GameLogic
+
+  // Declaração de objetos (como fizemos para enemy_balls)
+  GameObject meuObjeto;
+
+  // No início da task (após InitGameMap e DrawGameMap):
+  InitObject(&meuObjeto, 50, 50, 2, 1, 10, 10, ST7735_RED); // Inicializa um quadrado vermelho 10x10
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
+	    // ... (Seu código de movimento do jogador) ...
 
+	    // 1. Apaga a posição antiga do jogador (já está lá)
+	    // 2. Apaga a posição antiga do(s) objeto(s) em movimento
+	    //    (UpdateObject() já faz isso, mas se tiver muitos, pode ser melhor antes de todos updates)
+
+	    // 3. Atualiza a lógica de cada objeto em movimento
+	    UpdateObject(&meuObjeto); // Atualiza a posição da bolinha/objeto
+
+	    // 4. Desenha o objeto em sua nova posição
+	    DrawObject(&meuObjeto); // Desenha a bolinha/objeto
+
+	    // 5. Verifica colisões do jogador com o objeto
+	    // if (CheckPlayerObjectCollision(player_x, player_y, PLAYER_SIZE, &meuObjeto)) {
+	    //    Game_GameOver();
+	    // }
+
+	    // ... (Suas outras verificações de colisão do jogador) ...
+
+	    // Redesenha o jogador (já está lá)
+	    ST7735_draw_figure(player_x, player_y, soldado, ST7735_GREEN);
+
+	    vTaskDelay(20);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

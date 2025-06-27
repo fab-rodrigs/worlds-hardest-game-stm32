@@ -3,6 +3,7 @@
 "./Core/Src/figuras.o"
 "./Core/Src/fonts.o"
 "./Core/Src/freertos.o"
+"./Core/Src/game_entities.o"
 "./Core/Src/game_logic.o"
 "./Core/Src/game_map.o"
 "./Core/Src/main.o"

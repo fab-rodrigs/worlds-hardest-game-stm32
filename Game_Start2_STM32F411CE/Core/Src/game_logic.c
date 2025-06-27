@@ -32,11 +32,6 @@ uint8_t CheckWallCollision(int32_t px, int32_t py, uint8_t p_width, uint8_t p_he
     // Canto inferior direito
     if (CheckTileAt(px + p_width - 1, py + p_height - 1, TILE_WALL)) return 1;
 
-    // Se o jogador for maior que um pixel e o labirinto tiver passagens estreitas,
-    // pode ser necessário verificar pontos intermediários ou usar um algoritmo de colisão
-    // mais robusto (e.g., AABB vs. AABB para cada tile de parede que o jogador atravessa).
-    // Para começar, os 4 cantos são suficientes.
-
     return 0; // Nenhuma colisão com parede
 }
 
@@ -87,7 +82,7 @@ void Game_NextLevel(void) {
     ST7735_WriteString(20, (ST7735_HEIGHT / 2) - 10, "Nivel Completo!", Font_7x10, ST7735_GREEN, ST7735_BLACK);
     HAL_Delay(1000); // Pausa para a mensagem
     Game_RestartLevel(); // Por enquanto, apenas reinicia o nível atual
-    // No futuro, aqui você carregaria um novo mapa e novos inimigos.
+    // No futuro, carregar um novo mapa e novos inimigos.
 }
 
 void Game_GameOver(void) {
@@ -97,4 +92,11 @@ void Game_GameOver(void) {
     ST7735_WriteString(10, (ST7735_HEIGHT / 2), "Tocou no Perigo!", Font_7x10, ST7735_RED, ST7735_BLACK);
     HAL_Delay(2000); // Pausa para a mensagem
     Game_RestartLevel(); // Reinicia o nível após Game Over
+}
+
+uint8_t CheckCollision(int32_t x1, int32_t y1, uint16_t w1, uint16_t h1,
+                       int32_t x2, int32_t y2, uint16_t w2, uint16_t h2)
+{
+    return !(x1 + w1 <= x2 || x1 >= x2 + w2 ||
+             y1 + h1 <= y2 || y1 >= y2 + h2);
 }
