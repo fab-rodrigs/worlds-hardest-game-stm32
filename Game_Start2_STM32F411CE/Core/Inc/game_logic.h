@@ -4,6 +4,7 @@
 #define __GAME_LOGIC_H
 
 #include <stdint.h>
+#include "game_entities.h"
 
 // --- FUNÇÕES DE LÓGICA DO JOGO ---
 
@@ -33,6 +34,5 @@ void Game_GameOver(void);
 
 uint8_t CheckCollision(int32_t x1, int32_t y1, uint16_t w1, uint16_t h1,
                        int32_t x2, int32_t y2, uint16_t w2, uint16_t h2);
-
 
 #endif // __GAME_LOGIC_H

@@ -2,6 +2,7 @@
 
 #include "game_logic.h"
 #include "game_map.h"   // Para acessar o mapa e os tipos de tiles
+#include "game_entities.h"
 #include "st7735.h"     // Para funções de desenho de texto no LCD
 #include "main.h"       // Para acessar player_x, player_y e HAL_Delay
 
@@ -100,3 +101,5 @@ uint8_t CheckCollision(int32_t x1, int32_t y1, uint16_t w1, uint16_t h1,
     return !(x1 + w1 <= x2 || x1 >= x2 + w2 ||
              y1 + h1 <= y2 || y1 >= y2 + h2);
 }
+
+

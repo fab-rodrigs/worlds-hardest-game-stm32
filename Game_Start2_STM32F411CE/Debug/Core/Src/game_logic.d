@@ -1,5 +1,5 @@
 Core/Src/game_logic.o: ../Core/Src/game_logic.c ../Core/Inc/game_logic.h \
- ../Core/Inc/game_map.h ../Core/Inc/st7735.h ../Core/Inc/main.h \
+ ../Core/Inc/game_entities.h ../Core/Inc/st7735.h ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -31,9 +31,10 @@ Core/Src/game_logic.o: ../Core/Src/game_logic.c ../Core/Inc/game_logic.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- ../Core/Inc/fonts.h ../Core/Inc/figuras.h ../Core/Inc/main.h
+ ../Core/Inc/fonts.h ../Core/Inc/figuras.h ../Core/Inc/game_map.h \
+ ../Core/Inc/game_entities.h ../Core/Inc/st7735.h ../Core/Inc/main.h
 ../Core/Inc/game_logic.h:
-../Core/Inc/game_map.h:
+../Core/Inc/game_entities.h:
 ../Core/Inc/st7735.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
@@ -69,4 +70,7 @@ Core/Src/game_logic.o: ../Core/Src/game_logic.c ../Core/Inc/game_logic.h \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 ../Core/Inc/fonts.h:
 ../Core/Inc/figuras.h:
+../Core/Inc/game_map.h:
+../Core/Inc/game_entities.h:
+../Core/Inc/st7735.h:
 ../Core/Inc/main.h:

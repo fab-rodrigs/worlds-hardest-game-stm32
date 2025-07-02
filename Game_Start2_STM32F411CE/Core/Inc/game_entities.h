@@ -26,5 +26,6 @@ typedef struct {
 void InitObject(GameObject *obj, int32_t start_x, int32_t start_y, int32_t vel_x, int32_t vel_y, uint16_t obj_width, uint16_t obj_height, uint16_t obj_color);
 void UpdateObject(GameObject *obj);
 void DrawObject(GameObject *obj);
+void CheckReboundX(GameObject *obj, int32_t x_min, int32_t x_max);
 
 #endif // __GAME_ENTITIES_H
