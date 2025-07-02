@@ -294,8 +294,8 @@ int main(void)
   // Desenha o mapa do jogo pela primeira vez
   DrawGameMap();
   // Inicializa bolinhas vermelhas
-  InitObject(&red_balls[0], 60, 85,  1,  1, 8, 8, ST7735_RED);
-  InitObject(&red_balls[1], 60, 65, 1,  1, 8, 8, ST7735_RED);
+  InitObject(&red_balls[0], 60, 65,  1,  1, 8, 8, ST7735_RED);
+  InitObject(&red_balls[1], 60, 85, 1,  1, 8, 8, ST7735_RED);
   InitObject(&red_balls[2], 60, 45,  1, -1, 8, 8, ST7735_RED);
 
 

@@ -1686,7 +1686,7 @@ int main(void)
   DrawGameMap();
  8000d20:	f7ff fe0e 	bl	8000940 <DrawGameMap>
   // Inicializa bolinhas vermelhas
-  InitObject(&red_balls[0], 60, 85,  1,  1, 8, 8, ST7735_RED);
+  InitObject(&red_balls[0], 60, 65,  1,  1, 8, 8, ST7735_RED);
  8000d24:	f44f 4378 	mov.w	r3, #63488	@ 0xf800
  8000d28:	9303      	str	r3, [sp, #12]
  8000d2a:	2308      	movs	r3, #8
@@ -1696,11 +1696,11 @@ int main(void)
  8000d32:	2301      	movs	r3, #1
  8000d34:	9300      	str	r3, [sp, #0]
  8000d36:	2301      	movs	r3, #1
- 8000d38:	2255      	movs	r2, #85	@ 0x55
+ 8000d38:	2241      	movs	r2, #65	@ 0x41
  8000d3a:	213c      	movs	r1, #60	@ 0x3c
  8000d3c:	4847      	ldr	r0, [pc, #284]	@ (8000e5c <main+0x1c4>)
  8000d3e:	f7ff fbd7 	bl	80004f0 <InitObject>
-  InitObject(&red_balls[1], 60, 65, 1,  1, 8, 8, ST7735_RED);
+  InitObject(&red_balls[1], 60, 85, 1,  1, 8, 8, ST7735_RED);
  8000d42:	f44f 4378 	mov.w	r3, #63488	@ 0xf800
  8000d46:	9303      	str	r3, [sp, #12]
  8000d48:	2308      	movs	r3, #8
@@ -1710,7 +1710,7 @@ int main(void)
  8000d50:	2301      	movs	r3, #1
  8000d52:	9300      	str	r3, [sp, #0]
  8000d54:	2301      	movs	r3, #1
- 8000d56:	2241      	movs	r2, #65	@ 0x41
+ 8000d56:	2255      	movs	r2, #85	@ 0x55
  8000d58:	213c      	movs	r1, #60	@ 0x3c
  8000d5a:	4841      	ldr	r0, [pc, #260]	@ (8000e60 <main+0x1c8>)
  8000d5c:	f7ff fbc8 	bl	80004f0 <InitObject>
