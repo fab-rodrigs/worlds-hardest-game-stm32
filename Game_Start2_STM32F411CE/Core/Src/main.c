@@ -69,11 +69,12 @@ const osThreadAttr_t defaultTask_attributes = {
 
 uint16_t ADC_buffer[2];
 uint16_t valor_ADC[2];
+uint16_t deaths = 0;
 
 
 int32_t player_x;
 int32_t player_y;
-#define NUM_BALLS 3
+#define NUM_BALLS 4
 GameObject red_balls[NUM_BALLS];
 const uint8_t PLAYER_SIZE = 8;
 
@@ -181,11 +182,12 @@ void vTask_Move_Soldado(void *pvParameters)
 		}
 
         // 2. Colisão com Áreas de Perigo (Tiles vermelhos)
-		UpdateObject(red_balls);
-		DrawObject(red_balls);
+		//UpdateObject(red_balls);
+		//DrawObject(red_balls);
 		// A colisão com esses objetos causa o Game Over.
         if (CheckDanger(player_x, player_y, PLAYER_SIZE, PLAYER_SIZE)) {
             Game_GameOver();
+            deaths++;
         }
 
         // 3. Chegou ao Objetivo (Tiles azuis)
@@ -195,7 +197,7 @@ void vTask_Move_Soldado(void *pvParameters)
         }
 
 		// Redesenha o soldado na nova posição
-		ST7735_draw_figure(player_x, player_y, soldado, ST7735_GREEN);
+		ST7735_draw_figure(player_x, player_y, soldado, ST7735_CYAN);
 
 		vTaskDelay(20); // 50 quadros por segundo (ajuste para fluidez vs. processamento)
 	}
@@ -294,16 +296,17 @@ int main(void)
   // Desenha o mapa do jogo pela primeira vez
   DrawGameMap();
   // Inicializa bolinhas vermelhas
-  InitObject(&red_balls[0], 60, 65,  1,  1, 8, 8, ST7735_RED);
-  InitObject(&red_balls[1], 60, 85, 1,  1, 8, 8, ST7735_RED);
-  InitObject(&red_balls[2], 60, 45,  1, -1, 8, 8, ST7735_RED);
+  InitObject(&red_balls[0], 60, 60,  -1,  1, 5, 5, ST7735_RED);
+  InitObject(&red_balls[1], 60, 75, 1,  1, 5, 5, ST7735_RED);
+  InitObject(&red_balls[2], 60, 45,  1, 1, 5, 5, ST7735_RED);
+  InitObject(&red_balls[3], 60, 90, -1,  1, 5, 5, ST7735_RED);
 
 
   // Define a posição inicial do jogador
   player_x = PLAYER_START_X;
   player_y = PLAYER_START_Y;
 
-  ST7735_draw_figure(player_x, player_y, soldado, ST7735_GREEN);
+  /*ST7735_draw_figure(player_x, player_y, soldado, ST7735_GREEN);
 
   DrawObject(red_balls);
 

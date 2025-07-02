@@ -27,6 +27,8 @@ void CheckReboundX(GameObject *obj, int32_t x_min, int32_t x_max) {
 
 // Atualiza a posição do objeto apenas no eixo X com rebote
 void UpdateObject(GameObject *obj) {
+	int32_t old_x = obj->x;
+	int32_t old_y = obj->y;
     // Apaga o objeto antigo
     ST7735_FillRectangle(obj->x, obj->y, obj->width, obj->height, ST7735_BLACK);
 

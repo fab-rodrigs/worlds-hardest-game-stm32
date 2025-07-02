@@ -1,4 +1,4 @@
 ../Core/Src/game_entities.c:6:6:InitObject	1
 ../Core/Src/game_entities.c:17:6:CheckReboundX	3
 ../Core/Src/game_entities.c:29:6:UpdateObject	1
-../Core/Src/game_entities.c:44:6:DrawObject	1
+../Core/Src/game_entities.c:46:6:DrawObject	1

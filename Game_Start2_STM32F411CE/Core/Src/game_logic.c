@@ -25,13 +25,13 @@ static uint8_t CheckTileAt(int32_t px, int32_t py, uint8_t tile_type_to_check) {
 // Verifica os 4 cantos do quadrado do jogador.
 uint8_t CheckWallCollision(int32_t px, int32_t py, uint8_t p_width, uint8_t p_height) {
     // Canto superior esquerdo
-    if (CheckTileAt(px, py, TILE_WALL)) return 1;
+    if (CheckTileAt(px, py, 1)) return 1;
     // Canto superior direito
-    if (CheckTileAt(px + p_width - 1, py, TILE_WALL)) return 1;
+    if (CheckTileAt(px + p_width - 1, py, 1)) return 1;
     // Canto inferior esquerdo
-    if (CheckTileAt(px, py + p_height - 1, TILE_WALL)) return 1;
+    if (CheckTileAt(px, py + p_height - 1, 1)) return 1;
     // Canto inferior direito
-    if (CheckTileAt(px + p_width - 1, py + p_height - 1, TILE_WALL)) return 1;
+    if (CheckTileAt(px + p_width - 1, py + p_height - 1, 1)) return 1;
 
     return 0; // Nenhuma colisão com parede
 }
@@ -39,13 +39,13 @@ uint8_t CheckWallCollision(int32_t px, int32_t py, uint8_t p_width, uint8_t p_he
 // Verifica se o jogador (caixa) colide com um tile de objetivo.
 uint8_t CheckGoal(int32_t px, int32_t py, uint8_t p_width, uint8_t p_height) {
     // Canto superior esquerdo
-    if (CheckTileAt(px, py, TILE_GOAL)) return 1;
+    if (CheckTileAt(px, py, 3)) return 1;
     // Canto superior direito
-    if (CheckTileAt(px + p_width - 1, py, TILE_GOAL)) return 1;
+    if (CheckTileAt(px + p_width - 1, py, 3)) return 1;
     // Canto inferior esquerdo
-    if (CheckTileAt(px, py + p_height - 1, TILE_GOAL)) return 1;
+    if (CheckTileAt(px, py + p_height - 1, 3)) return 1;
     // Canto inferior direito
-    if (CheckTileAt(px + p_width - 1, py + p_height - 1, TILE_GOAL)) return 1;
+    if (CheckTileAt(px + p_width - 1, py + p_height - 1, 3)) return 1;
 
     return 0; // Nenhuma colisão com objetivo
 }
@@ -91,7 +91,7 @@ void Game_GameOver(void) {
     ST7735_FillScreen(ST7735_BLACK);
     ST7735_WriteString(20, (ST7735_HEIGHT / 2) - 20, "GAME OVER", Font_11x18, ST7735_RED, ST7735_BLACK);
     ST7735_WriteString(10, (ST7735_HEIGHT / 2), "Tocou no Perigo!", Font_7x10, ST7735_RED, ST7735_BLACK);
-    HAL_Delay(2000); // Pausa para a mensagem
+    HAL_Delay(500); // Pausa para a mensagem
     Game_RestartLevel(); // Reinicia o nível após Game Over
 }
 

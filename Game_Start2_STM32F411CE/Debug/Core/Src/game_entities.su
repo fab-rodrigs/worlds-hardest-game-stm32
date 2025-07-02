@@ -1,4 +1,4 @@
 ../Core/Src/game_entities.c:6:6:InitObject	24	static
 ../Core/Src/game_entities.c:17:6:CheckReboundX	24	static
-../Core/Src/game_entities.c:29:6:UpdateObject	32	static
-../Core/Src/game_entities.c:44:6:DrawObject	32	static
+../Core/Src/game_entities.c:29:6:UpdateObject	40	static
+../Core/Src/game_entities.c:46:6:DrawObject	32	static
