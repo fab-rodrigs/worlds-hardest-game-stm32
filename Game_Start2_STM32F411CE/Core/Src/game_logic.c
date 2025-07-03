@@ -68,7 +68,7 @@ uint8_t CheckDanger(int32_t px, int32_t py, uint8_t p_width, uint8_t p_height) {
 
 void Game_RestartLevel(void) {
     // Mostra mensagem e reinicia o jogador para a posição inicial.
-    ST7735_FillScreen(ST7735_BLACK);
+    //ST7735_FillScreen(ST7735_BLACK);
     ST7735_WriteString(20, (ST7735_HEIGHT / 2) - 10, "Reiniciando...", Font_7x10, ST7735_RED, ST7735_BLACK);
     HAL_Delay(500); // Pequena pausa para a mensagem
     player_x = PLAYER_START_X;
@@ -79,7 +79,7 @@ void Game_RestartLevel(void) {
 void Game_NextLevel(void) {
     // Lógica para avançar para o próximo nível.
     // Por enquanto, apenas mostra uma mensagem e reinicia o nível atual.
-    ST7735_FillScreen(ST7735_BLACK);
+    //ST7735_FillScreen(ST7735_BLACK);
     ST7735_WriteString(20, (ST7735_HEIGHT / 2) - 10, "Nivel Completo!", Font_7x10, ST7735_GREEN, ST7735_BLACK);
     HAL_Delay(1000); // Pausa para a mensagem
     Game_RestartLevel(); // Por enquanto, apenas reinicia o nível atual
@@ -88,7 +88,8 @@ void Game_NextLevel(void) {
 
 void Game_GameOver(void) {
     // Lógica para Game Over.
-    ST7735_FillScreen(ST7735_BLACK);
+    //ST7735_FillScreen(ST7735_BLACK);
+    //ST7735_FillRectangle(0, 0, 10, 10, ST7735_BLACK);
     ST7735_WriteString(20, (ST7735_HEIGHT / 2) - 20, "GAME OVER", Font_11x18, ST7735_RED, ST7735_BLACK);
     ST7735_WriteString(10, (ST7735_HEIGHT / 2), "Tocou no Perigo!", Font_7x10, ST7735_RED, ST7735_BLACK);
     HAL_Delay(500); // Pausa para a mensagem
@@ -101,5 +102,6 @@ uint8_t CheckCollision(int32_t x1, int32_t y1, uint16_t w1, uint16_t h1,
     return !(x1 + w1 <= x2 || x1 >= x2 + w2 ||
              y1 + h1 <= y2 || y1 >= y2 + h2);
 }
+
 
 

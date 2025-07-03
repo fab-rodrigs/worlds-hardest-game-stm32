@@ -169,6 +169,8 @@ void InitGameMap(void) {
 
 void DrawGameMap(void) {
     // Desenha cada pixel do mapa na tela.
+	//sprintf(buffer, "Mortes: %d", deaths);
+	//ST7735_WriteString(32, 4, buffer, Font_7x10, ST7735_CYAN, ST7735_BLACK);
     for (int y = 0; y < ST7735_HEIGHT; y++) {
         for (int x = 0; x < ST7735_WIDTH; x++) {
             uint8_t tile_type = game_map[y][x]; // Obtém o tipo de tile

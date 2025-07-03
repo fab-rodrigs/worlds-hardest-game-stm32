@@ -70,7 +70,7 @@ const osThreadAttr_t defaultTask_attributes = {
 uint16_t ADC_buffer[2];
 uint16_t valor_ADC[2];
 uint16_t deaths = 0;
-
+char buffer[32];
 
 int32_t player_x;
 int32_t player_y;
@@ -117,6 +117,7 @@ void vTask_Move_Balls(void *pvParameters)
                                red_balls[i].x, red_balls[i].y, red_balls[i].width, red_balls[i].height))
             {
                 Game_GameOver();
+                deaths++;
             }
         }
         vTaskDelay(20);
@@ -194,6 +195,8 @@ void vTask_Move_Soldado(void *pvParameters)
         // A colisão com esses objetos passa o jogador para outro nível
         if (CheckGoal(player_x, player_y, PLAYER_SIZE, PLAYER_SIZE)) {
             Game_NextLevel();
+            sprintf(buffer, "Mortes: %d", deaths);
+            ST7735_WriteString(32, 4, buffer, Font_7x10, ST7735_CYAN, ST7735_BLACK);
         }
 
 		// Redesenha o soldado na nova posição
@@ -295,6 +298,9 @@ int main(void)
 
   // Desenha o mapa do jogo pela primeira vez
   DrawGameMap();
+  sprintf(buffer, "Mortes: %d", deaths);
+  ST7735_WriteString(32, 4, buffer, Font_7x10, ST7735_CYAN, ST7735_BLACK);
+
   // Inicializa bolinhas vermelhas
   InitObject(&red_balls[0], 60, 60,  -1,  1, 5, 5, ST7735_RED);
   InitObject(&red_balls[1], 60, 75, 1,  1, 5, 5, ST7735_RED);
