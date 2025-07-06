@@ -157,11 +157,11 @@ void vTask_Move_Soldado(void *pvParameters)
 		// ------------------------------------------------------------------------
 		if(dif_eixoY < 1800)
 		{
-			next_player_y--;
+			next_player_y++;
 		}
 		else if(dif_eixoY > 3800)
 		{
-			next_player_y++;
+			next_player_y--;
 		}
 		// ------------------------------------------------------------------------
 
