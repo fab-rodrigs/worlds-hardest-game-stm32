@@ -1,2 +1,3 @@
-../Core/Src/game_map.c:170:6:DrawGameMap	8
-../Core/Src/game_map.c:193:9:GetTileType	5
+../Core/Src/game_map.c:300:6:DrawGameMap	8
+../Core/Src/game_map.c:323:6:DrawGameOver	8
+../Core/Src/game_map.c:348:9:GetTileType	5

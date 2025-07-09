@@ -175,7 +175,7 @@ void vTask_Move_Soldado(void *pvParameters)
 
         // --- LÓGICA DE JOGO: COLISÕES E ESTADO ---
 		// Paredes bloqueiam o movimento.
-		if (CheckWallCollision(next_player_x, next_player_y, PLAYER_SIZE, PLAYER_SIZE)) {
+		if (CheckWallCollision(next_player_x-1, next_player_y-1, PLAYER_SIZE+1, PLAYER_SIZE+1)) {
 			player_x = current_player_x; // Volta para a posição anterior
 			player_y = current_player_y; // Volta para a posição anterior
 		} else {
@@ -191,16 +191,16 @@ void vTask_Move_Soldado(void *pvParameters)
         if (CheckDanger(player_x, player_y, PLAYER_SIZE, PLAYER_SIZE)) {
             Game_GameOver();
             deaths++;
-            sprintf(buffer, "Mortes: %d", deaths);
-			ST7735_WriteString(32, 4, buffer, Font_7x10, ST7735_CYAN, ST7735_BLACK);
+            sprintf(buffer, "%d", deaths);
+			ST7735_WriteString(133, 4, buffer, Font_7x10, ST7735_WHITE, ST7735_BLACK);
         }
 
         // 3. Chegou ao Objetivo (Tiles azuis)
         // A colisão com esses objetos passa o jogador para outro nível
         if (CheckGoal(player_x, player_y, PLAYER_SIZE, PLAYER_SIZE)) {
             Game_NextLevel();
-            sprintf(buffer, "Mortes: %d", deaths);
-            ST7735_WriteString(32, 4, buffer, Font_7x10, ST7735_CYAN, ST7735_BLACK);
+            sprintf(buffer, "%d", deaths);
+			ST7735_WriteString(133, 4, buffer, Font_7x10, ST7735_WHITE, ST7735_BLACK);
         }
 
 		// Redesenha o soldado na nova posição
@@ -304,8 +304,8 @@ int main(void)
   // Desenha o mapa do jogo pela primeira vez
 
   DrawGameMap();
-  sprintf(buffer, "Mortes: %d", deaths);
-  ST7735_WriteString(32, 4, buffer, Font_7x10, ST7735_CYAN, ST7735_BLACK);
+  sprintf(buffer, "%d", deaths);
+  ST7735_WriteString(133, 4, buffer, Font_7x10, ST7735_WHITE, ST7735_BLACK);
 
   // Inicializa bolinhas vermelhas
   InitObject(&red_balls[0], 60, 60,  -1,  1, 5, 5, ST7735_RED);

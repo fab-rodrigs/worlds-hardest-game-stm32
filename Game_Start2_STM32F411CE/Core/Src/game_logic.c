@@ -71,13 +71,13 @@ uint8_t CheckDanger(int32_t px, int32_t py, uint8_t p_width, uint8_t p_height) {
 void Game_RestartLevel(void) {
     // Mostra mensagem e reinicia o jogador para a posição inicial.
     //ST7735_FillScreen(ST7735_BLACK);
-    ST7735_WriteString(20, (ST7735_HEIGHT / 2) - 10, "Reiniciando...", Font_7x10, ST7735_RED, ST7735_BLACK);
+    ST7735_WriteString(30, 60, "Reiniciando...", Font_7x10, ST7735_WHITE, ST7735_BLACK);
     HAL_Delay(500); // Pequena pausa para a mensagem
     player_x = PLAYER_START_X;
     player_y = PLAYER_START_Y;
     DrawGameMap(); // Redesenha o mapa completo
-    sprintf(buffer, "Mortes: %d", deaths);
-	ST7735_WriteString(32, 4, buffer, Font_7x10, ST7735_CYAN, ST7735_BLACK);
+    sprintf(buffer, "%d", deaths);
+	ST7735_WriteString(133, 4, buffer, Font_7x10, ST7735_WHITE, ST7735_BLACK);
 }
 
 void Game_NextLevel(void) {
@@ -92,10 +92,11 @@ void Game_NextLevel(void) {
 
 void Game_GameOver(void) {
     // Lógica para Game Over.
-    //ST7735_FillScreen(ST7735_BLACK);
+	//ST7735_FillScreen(ST7735_BLACK);
     //ST7735_FillRectangle(0, 0, 10, 10, ST7735_BLACK);
-    ST7735_WriteString(20, (ST7735_HEIGHT / 2) - 20, "GAME OVER", Font_11x18, ST7735_RED, ST7735_BLACK);
-    ST7735_WriteString(10, (ST7735_HEIGHT / 2), "Tocou no Perigo!", Font_7x10, ST7735_RED, ST7735_BLACK);
+	DrawGameOver();
+    //ST7735_WriteString(20, (ST7735_HEIGHT / 2) - 20, "GAME OVER", Font_11x18, ST7735_RED, ST7735_BLACK);
+    //ST7735_WriteString(10, (ST7735_HEIGHT / 2), "Tocou no Perigo!", Font_7x10, ST7735_RED, ST7735_BLACK);
     HAL_Delay(500); // Pausa para a mensagem
     Game_RestartLevel(); // Reinicia o nível após Game Over
 }

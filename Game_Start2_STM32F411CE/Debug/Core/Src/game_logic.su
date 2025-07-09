@@ -4,5 +4,5 @@
 ../Core/Src/game_logic.c:56:9:CheckDanger	24	static
 ../Core/Src/game_logic.c:71:6:Game_RestartLevel	24	static
 ../Core/Src/game_logic.c:83:6:Game_NextLevel	24	static
-../Core/Src/game_logic.c:93:6:Game_GameOver	24	static
-../Core/Src/game_logic.c:102:9:CheckCollision	24	static
+../Core/Src/game_logic.c:93:6:Game_GameOver	8	static
+../Core/Src/game_logic.c:103:9:CheckCollision	24	static

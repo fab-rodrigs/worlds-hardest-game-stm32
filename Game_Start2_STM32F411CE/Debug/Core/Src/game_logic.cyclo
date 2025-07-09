@@ -5,4 +5,4 @@
 ../Core/Src/game_logic.c:71:6:Game_RestartLevel	1
 ../Core/Src/game_logic.c:83:6:Game_NextLevel	1
 ../Core/Src/game_logic.c:93:6:Game_GameOver	1
-../Core/Src/game_logic.c:102:9:CheckCollision	5
+../Core/Src/game_logic.c:103:9:CheckCollision	5
