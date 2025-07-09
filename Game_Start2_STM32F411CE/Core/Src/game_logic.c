@@ -10,6 +10,8 @@
 extern int32_t player_x;
 extern int32_t player_y;
 extern const uint8_t PLAYER_SIZE;
+extern uint16_t deaths;
+extern char buffer[32];
 
 // --- FUNÇÕES DE LÓGICA DO JOGO ---
 
@@ -74,6 +76,8 @@ void Game_RestartLevel(void) {
     player_x = PLAYER_START_X;
     player_y = PLAYER_START_Y;
     DrawGameMap(); // Redesenha o mapa completo
+    sprintf(buffer, "Mortes: %d", deaths);
+	ST7735_WriteString(32, 4, buffer, Font_7x10, ST7735_CYAN, ST7735_BLACK);
 }
 
 void Game_NextLevel(void) {
@@ -95,7 +99,6 @@ void Game_GameOver(void) {
     HAL_Delay(500); // Pausa para a mensagem
     Game_RestartLevel(); // Reinicia o nível após Game Over
 }
-
 uint8_t CheckCollision(int32_t x1, int32_t y1, uint16_t w1, uint16_t h1,
                        int32_t x2, int32_t y2, uint16_t w2, uint16_t h2)
 {

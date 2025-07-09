@@ -116,8 +116,9 @@ void vTask_Move_Balls(void *pvParameters)
             if (CheckCollision(player_x, player_y, PLAYER_SIZE, PLAYER_SIZE,
                                red_balls[i].x, red_balls[i].y, red_balls[i].width, red_balls[i].height))
             {
-                Game_GameOver();
-                deaths++;
+
+            	deaths++;
+            	Game_GameOver();
             }
         }
         vTaskDelay(20);
@@ -139,7 +140,8 @@ void vTask_Move_Soldado(void *pvParameters)
 		next_player_y = player_y; // Começa a próxima posição como a atual
 
 		// Apaga o player na posição anterior (pinta de preto).
-		ST7735_FillRectangle(current_player_x, current_player_y, PLAYER_SIZE, PLAYER_SIZE, ST7735_BLACK);
+		//ST7735_FillRectangle(current_player_x, current_player_y, PLAYER_SIZE, PLAYER_SIZE, ST7735_BLACK);
+		ST7735_FillRectangle(current_player_x - 1, current_player_y - 1, PLAYER_SIZE + 1, PLAYER_SIZE + 1, ST7735_BLACK);
 
 		// Leitura do Joystick
 		uint32_t dif_eixoX = valor_ADC[1];
@@ -189,6 +191,8 @@ void vTask_Move_Soldado(void *pvParameters)
         if (CheckDanger(player_x, player_y, PLAYER_SIZE, PLAYER_SIZE)) {
             Game_GameOver();
             deaths++;
+            sprintf(buffer, "Mortes: %d", deaths);
+			ST7735_WriteString(32, 4, buffer, Font_7x10, ST7735_CYAN, ST7735_BLACK);
         }
 
         // 3. Chegou ao Objetivo (Tiles azuis)
@@ -273,7 +277,8 @@ int main(void)
   ST7735_Init();
 
   // --- PREPARAÇÃO DO JOGO ---
-  ST7735_FillScreen(ST7735_BLACK); // Limpa a tela antes de desenhar o mapa
+  ST7735_FillScreen(ST7735_BLACK); // Limpa a tela antes de desenhar o mapa,
+
 
   // Você pode ter uma tela de introdução antes do jogo começar.
   ST7735_draw_figure(0, 8, fig_campo_minado, ST7735_WHITE); // Sua figura existente
@@ -297,6 +302,7 @@ int main(void)
   // Não há necessidade de chamar InitGameMap() aqui.
 
   // Desenha o mapa do jogo pela primeira vez
+
   DrawGameMap();
   sprintf(buffer, "Mortes: %d", deaths);
   ST7735_WriteString(32, 4, buffer, Font_7x10, ST7735_CYAN, ST7735_BLACK);
@@ -385,10 +391,10 @@ int main(void)
 	    //    (UpdateObject() já faz isso, mas se tiver muitos, pode ser melhor antes de todos updates)
 
 	    // 3. Atualiza a lógica de cada objeto em movimento
-	    UpdateObject(&meuObjeto); // Atualiza a posição da bolinha/objeto
+	  //UpdateObject(&meuObjeto); // Atualiza a posição da bolinha/objeto
 
 	    // 4. Desenha o objeto em sua nova posição
-	    DrawObject(&meuObjeto); // Desenha a bolinha/objeto
+	  //DrawObject(&meuObjeto); // Desenha a bolinha/objeto
 
 	    // 5. Verifica colisões do jogador com o objeto
 	    // if (CheckPlayerObjectCollision(player_x, player_y, PLAYER_SIZE, &meuObjeto)) {
@@ -398,9 +404,9 @@ int main(void)
 	    // ... (Suas outras verificações de colisão do jogador) ...
 
 	    // Redesenha o jogador (já está lá)
-	    ST7735_draw_figure(player_x, player_y, soldado, ST7735_GREEN);
+	  //ST7735_draw_figure(player_x, player_y, soldado, ST7735_GREEN);
 
-	    vTaskDelay(20);
+	  //vTaskDelay(20);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
