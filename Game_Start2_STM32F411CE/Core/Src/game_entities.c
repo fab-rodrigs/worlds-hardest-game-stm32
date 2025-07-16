@@ -25,8 +25,19 @@ void CheckReboundX(GameObject *obj, int32_t x_min, int32_t x_max) {
     }
 }
 
+void CheckReboundY(GameObject *obj, int32_t y_min, int32_t y_max) {
+    if (obj->y < y_min) {
+        obj->y = y_min;
+        obj->dy *= -1;
+    }
+    if (obj->y + obj->width > y_max) {
+        obj->y = y_max - obj->width;
+        obj->dy *= -1;
+    }
+}
+
 // Atualiza a posição do objeto apenas no eixo X com rebote
-void UpdateObject(GameObject *obj) {
+void UpdateObjectX(GameObject *obj) {
 	int32_t old_x = obj->x;
 	int32_t old_y = obj->y;
     // Apaga o objeto antigo
@@ -35,8 +46,24 @@ void UpdateObject(GameObject *obj) {
     // Atualiza apenas o eixo X
     obj->x += obj->dx;
 
-    // Rebote apenas entre x = 20 e x = 100 (exemplo)
+    // Rebote apenas entre x = 40 e x = 120 (exemplo)
     CheckReboundX(obj, 40, 120);
+
+    // Desenha na nova posição
+    DrawObject(obj);
+}
+
+void UpdateObjectY(GameObject *obj) {
+	int32_t old_x = obj->x;
+	int32_t old_y = obj->y;
+    // Apaga o objeto antigo
+    ST7735_FillRectangle(obj->x, obj->y, obj->width, obj->height, ST7735_BLACK);
+
+    // Atualiza apenas o eixo Y
+    obj->y += obj->dy;
+
+    // Rebote apenas entre x = 40 e x = 120 (exemplo)
+    CheckReboundY(obj, 40, 100);
 
     // Desenha na nova posição
     DrawObject(obj);

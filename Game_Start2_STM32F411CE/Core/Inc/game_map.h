@@ -26,7 +26,7 @@
 
 // --- POSIÇÃO INICIAL DO JOGADOR ---
 #define PLAYER_START_X 20
-#define PLAYER_START_Y 60
+#define PLAYER_START_Y 65
 
 // --- VARIÁVEIS GLOBAIS DO JOGO ---
 // O mapa agora é 'const' e lido diretamente da Flash.

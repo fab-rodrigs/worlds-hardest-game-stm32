@@ -1,5 +1,5 @@
-../Core/Src/game_map.c:562:6:DrawMenu	24	static
-../Core/Src/game_map.c:585:6:DrawGameMap	24	static
-../Core/Src/game_map.c:608:6:DrawGameMap2	24	static
-../Core/Src/game_map.c:631:6:DrawGameOver	24	static
-../Core/Src/game_map.c:656:9:GetTileType	16	static
+../Core/Src/game_map.c:566:6:DrawMenu	24	static
+../Core/Src/game_map.c:589:6:DrawGameMap	24	static
+../Core/Src/game_map.c:612:6:DrawGameMap2	24	static
+../Core/Src/game_map.c:635:6:DrawGameOver	24	static
+../Core/Src/game_map.c:660:9:GetTileType	16	static

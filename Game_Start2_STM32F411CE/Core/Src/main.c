@@ -78,7 +78,9 @@ int32_t player_x;
 int32_t player_y;
 #define NUM_BALLS 4
 GameObject red_balls[NUM_BALLS];
+GameObject red_balls2[NUM_BALLS];
 const uint8_t PLAYER_SIZE = 8;
+extern uint8_t current_level;
 
 
 /* USER CODE END PV */
@@ -112,16 +114,29 @@ void vTask_Move_Balls(void *pvParameters)
     {
         for (int i = 0; i < NUM_BALLS; i++)
         {
-            UpdateObject(&red_balls[i]);
-            DrawObject(&red_balls[i]);
+        	if(current_level == 1){
+        		UpdateObjectX(&red_balls[i]);
+        		DrawObject(&red_balls[i]);
+                if (CheckCollision(player_x, player_y, PLAYER_SIZE, PLAYER_SIZE,
+    			   red_balls[i].x, red_balls[i].y, red_balls[i].width, red_balls[i].height))
+                {
 
-            if (CheckCollision(player_x, player_y, PLAYER_SIZE, PLAYER_SIZE,
-                               red_balls[i].x, red_balls[i].y, red_balls[i].width, red_balls[i].height))
-            {
+                	deaths++;
+                	Game_GameOver();
+                }
+        	}
+        	if(current_level == 2){
+				UpdateObjectY(&red_balls2[i]);
+				DrawObject(&red_balls2[i]);
+	            if (CheckCollision(player_x, player_y, PLAYER_SIZE, PLAYER_SIZE,
+				   red_balls2[i].x, red_balls2[i].y, red_balls2[i].width, red_balls2[i].height))
+	            {
+	            	deaths++;
+	            	Game_GameOver();
+	            }
+			}
 
-            	deaths++;
-            	Game_GameOver();
-            }
+
         }
         vTaskDelay(20);
     }
@@ -200,7 +215,7 @@ void vTask_Move_Soldado(void *pvParameters)
 			ST7735_WriteString(18, 4, buffer2, Font_7x10, ST7735_WHITE, ST7735_BLACK);
         }
 
-        // 3. Chegou ao Objetivo (Tiles azuis)
+        // 3. Chegou ao Objetivo (Tiles verdes)
         // A colisão com esses objetos passa o jogador para outro nível
         if (CheckGoal(player_x, player_y, PLAYER_SIZE, PLAYER_SIZE)) {
             Game_NextLevel();
@@ -326,6 +341,11 @@ int main(void)
   InitObject(&red_balls[1], 60, 75, 1,  1, 5, 5, ST7735_RED);
   InitObject(&red_balls[2], 60, 45,  1, 1, 5, 5, ST7735_RED);
   InitObject(&red_balls[3], 60, 90, -1,  1, 5, 5, ST7735_RED);
+
+  InitObject(&red_balls2[0], 50, 60,  1,  -1, 5, 5, ST7735_RED);
+  InitObject(&red_balls2[1], 70, 60, 1,  1, 5, 5, ST7735_RED);
+  InitObject(&red_balls2[2], 90, 60,  1, -1, 5, 5, ST7735_RED);
+  InitObject(&red_balls2[3], 110, 60, 1,  1, 5, 5, ST7735_RED);
 
 
   // Define a posição inicial do jogador

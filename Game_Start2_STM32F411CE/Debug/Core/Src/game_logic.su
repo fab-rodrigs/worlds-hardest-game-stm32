@@ -3,6 +3,6 @@
 ../Core/Src/game_logic.c:46:9:CheckGoal	24	static
 ../Core/Src/game_logic.c:60:9:CheckDanger	24	static
 ../Core/Src/game_logic.c:75:6:Game_RestartLevel	24	static
-../Core/Src/game_logic.c:89:6:Game_NextLevel	24	static
-../Core/Src/game_logic.c:114:6:Game_GameOver	8	static
-../Core/Src/game_logic.c:124:9:CheckCollision	24	static
+../Core/Src/game_logic.c:90:6:Game_NextLevel	24	static
+../Core/Src/game_logic.c:125:6:Game_GameOver	8	static
+../Core/Src/game_logic.c:135:9:CheckCollision	24	static

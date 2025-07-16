@@ -14,7 +14,7 @@ extern uint16_t deaths;
 extern char buffer[32];
 extern uint16_t wins;
 extern char buffer2[32];
-//uint8_t current_level = 0;
+uint8_t current_level = 1;
 
 
 // --- FUNÇÕES DE LÓGICA DO JOGO ---
@@ -79,6 +79,7 @@ void Game_RestartLevel(void) {
     HAL_Delay(500); // Pequena pausa para a mensagem
     player_x = PLAYER_START_X;
     player_y = PLAYER_START_Y;
+    current_level = 1;
     DrawGameMap(); // Redesenha o mapa completo
     sprintf(buffer, "%d", deaths);
 	ST7735_WriteString(133, 4, buffer, Font_7x10, ST7735_WHITE, ST7735_BLACK);
@@ -93,13 +94,23 @@ void Game_NextLevel(void) {
     ST7735_WriteString(20, (ST7735_HEIGHT / 2) - 10, "Nivel Completo!", Font_7x10, ST7735_GREEN, ST7735_BLACK);
     HAL_Delay(1000); // Pausa para a mensagem
 
-    /*DrawGameMap2();
+    player_x = PLAYER_START_X;
+    player_y = PLAYER_START_Y;
+    if(current_level == 1){
+    	DrawGameMap2();
+		current_level = 2;
+    }
+    else if(current_level == 2){
+		DrawGameMap();
+		current_level = 1;
+	}
+
     sprintf(buffer, "%d", deaths);
 	ST7735_WriteString(133, 4, buffer, Font_7x10, ST7735_WHITE, ST7735_BLACK);
 	sprintf(buffer2, "%d", wins);
 	ST7735_WriteString(18, 4, buffer2, Font_7x10, ST7735_WHITE, ST7735_BLACK);
-   */
-	Game_RestartLevel(); // Por enquanto, apenas reinicia o nível atual
+
+	//Game_RestartLevel(); // Por enquanto, apenas reinicia o nível atual
 
     /*DrawMenu();
     while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15))// quando pressionar a tecla comea o jogo
