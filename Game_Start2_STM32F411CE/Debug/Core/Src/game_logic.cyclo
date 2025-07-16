@@ -1,8 +1,8 @@
-../Core/Src/game_logic.c:19:16:CheckTileAt	2
-../Core/Src/game_logic.c:28:9:CheckWallCollision	5
-../Core/Src/game_logic.c:42:9:CheckGoal	5
-../Core/Src/game_logic.c:56:9:CheckDanger	5
-../Core/Src/game_logic.c:71:6:Game_RestartLevel	1
-../Core/Src/game_logic.c:83:6:Game_NextLevel	1
-../Core/Src/game_logic.c:93:6:Game_GameOver	1
-../Core/Src/game_logic.c:103:9:CheckCollision	5
+../Core/Src/game_logic.c:23:16:CheckTileAt	2
+../Core/Src/game_logic.c:32:9:CheckWallCollision	5
+../Core/Src/game_logic.c:46:9:CheckGoal	5
+../Core/Src/game_logic.c:60:9:CheckDanger	5
+../Core/Src/game_logic.c:75:6:Game_RestartLevel	1
+../Core/Src/game_logic.c:89:6:Game_NextLevel	1
+../Core/Src/game_logic.c:114:6:Game_GameOver	1
+../Core/Src/game_logic.c:124:9:CheckCollision	5

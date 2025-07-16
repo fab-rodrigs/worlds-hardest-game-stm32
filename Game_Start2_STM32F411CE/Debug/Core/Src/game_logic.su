@@ -1,8 +1,8 @@
-../Core/Src/game_logic.c:19:16:CheckTileAt	24	static
-../Core/Src/game_logic.c:28:9:CheckWallCollision	24	static
-../Core/Src/game_logic.c:42:9:CheckGoal	24	static
-../Core/Src/game_logic.c:56:9:CheckDanger	24	static
-../Core/Src/game_logic.c:71:6:Game_RestartLevel	24	static
-../Core/Src/game_logic.c:83:6:Game_NextLevel	24	static
-../Core/Src/game_logic.c:93:6:Game_GameOver	8	static
-../Core/Src/game_logic.c:103:9:CheckCollision	24	static
+../Core/Src/game_logic.c:23:16:CheckTileAt	24	static
+../Core/Src/game_logic.c:32:9:CheckWallCollision	24	static
+../Core/Src/game_logic.c:46:9:CheckGoal	24	static
+../Core/Src/game_logic.c:60:9:CheckDanger	24	static
+../Core/Src/game_logic.c:75:6:Game_RestartLevel	24	static
+../Core/Src/game_logic.c:89:6:Game_NextLevel	24	static
+../Core/Src/game_logic.c:114:6:Game_GameOver	8	static
+../Core/Src/game_logic.c:124:9:CheckCollision	24	static

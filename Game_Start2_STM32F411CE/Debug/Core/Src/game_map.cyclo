@@ -1,3 +1,5 @@
-../Core/Src/game_map.c:300:6:DrawGameMap	8
-../Core/Src/game_map.c:323:6:DrawGameOver	8
-../Core/Src/game_map.c:348:9:GetTileType	5
+../Core/Src/game_map.c:562:6:DrawMenu	8
+../Core/Src/game_map.c:585:6:DrawGameMap	8
+../Core/Src/game_map.c:608:6:DrawGameMap2	8
+../Core/Src/game_map.c:631:6:DrawGameOver	8
+../Core/Src/game_map.c:656:9:GetTileType	5

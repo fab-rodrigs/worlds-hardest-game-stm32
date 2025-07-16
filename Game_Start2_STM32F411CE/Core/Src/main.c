@@ -71,6 +71,8 @@ uint16_t ADC_buffer[2];
 uint16_t valor_ADC[2];
 uint16_t deaths = 0;
 char buffer[32];
+uint16_t wins = 0;
+char buffer2[32];
 
 int32_t player_x;
 int32_t player_y;
@@ -193,12 +195,18 @@ void vTask_Move_Soldado(void *pvParameters)
             deaths++;
             sprintf(buffer, "%d", deaths);
 			ST7735_WriteString(133, 4, buffer, Font_7x10, ST7735_WHITE, ST7735_BLACK);
+
+			sprintf(buffer2, "%d", wins);
+			ST7735_WriteString(18, 4, buffer2, Font_7x10, ST7735_WHITE, ST7735_BLACK);
         }
 
         // 3. Chegou ao Objetivo (Tiles azuis)
         // A colisão com esses objetos passa o jogador para outro nível
         if (CheckGoal(player_x, player_y, PLAYER_SIZE, PLAYER_SIZE)) {
             Game_NextLevel();
+            wins++;
+            sprintf(buffer2, "%d", wins);
+			ST7735_WriteString(18, 4, buffer2, Font_7x10, ST7735_WHITE, ST7735_BLACK);
             sprintf(buffer, "%d", deaths);
 			ST7735_WriteString(133, 4, buffer, Font_7x10, ST7735_WHITE, ST7735_BLACK);
         }
@@ -281,9 +289,13 @@ int main(void)
 
 
   // Você pode ter uma tela de introdução antes do jogo começar.
-  ST7735_draw_figure(0, 8, fig_campo_minado, ST7735_WHITE); // Sua figura existente
+  //ST7735_draw_figure(0, 8, fig_campo_minado, ST7735_WHITE); // Sua figura existente
+
+  // aqui
+  DrawMenu();
+
   //ST7735_WriteString(20, 28,"World's Hardest Game", Font_7x10, ST7735_CYAN, ST7735_BLACK);
-  ST7735_WriteString(32, 48,"Pressione Start!", Font_7x10, ST7735_CYAN, ST7735_BLACK);
+  //ST7735_WriteString(32, 48,"Pressione Start!", Font_7x10, ST7735_CYAN, ST7735_BLACK);
 
 
   // --------------------------------------------------------------------------------------
@@ -304,6 +316,8 @@ int main(void)
   // Desenha o mapa do jogo pela primeira vez
 
   DrawGameMap();
+  sprintf(buffer2, "%d", wins);
+  ST7735_WriteString(18, 4, buffer2, Font_7x10, ST7735_WHITE, ST7735_BLACK);
   sprintf(buffer, "%d", deaths);
   ST7735_WriteString(133, 4, buffer, Font_7x10, ST7735_WHITE, ST7735_BLACK);
 
